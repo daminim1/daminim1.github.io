@@ -7,21 +7,23 @@
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
 </head>
 <body>
+<div style="display: flex; flex-direction: row;">
     <model-viewer
         src="assets/models/canton_Bottle.glb"
         style="width: 400px; height: 600px; margin: 0 auto;"
-       
-		ios-src="assets/models/canton_Bottle.usdz"
-		ar
-		ar-modes="scene-viewer quick-look"
+        auto-rotate
+        ios-src="assets/models/canton_Bottle.usdz"
+        ar
+        ar-modes="scene-viewer quick-look"
     ></model-viewer>
-	<model-viewer
+    <model-viewer
         src="assets/models/soda_can.glb"
         style="width: 400px; height: 600px; margin: 0 auto;"
-        auto-rotate 
-		ios-src="assets/models/soda_can.usdz"
-		ar
-		ar-modes="scene-viewer quick-look"
+        auto-rotate
+        ios-src="assets/models/soda_can.usdz"
+        ar
+        ar-modes="scene-viewer quick-look"
     ></model-viewer>
+</div>
 </body>
 </html>
