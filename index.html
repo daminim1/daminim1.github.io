@@ -3,84 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Model Viewer with Drag and Drop Texture</title>
+    <title>Model Viewer</title>
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
 </head>
 <body>
-    <div id="container" style="width: 800px; height: 600px; margin: 0 auto;">
-        <model-viewer
-            src="assets/models/canton_Bottle.glb"
-            style="width: 100%; height: 100%;"
-            ar
-            ar-modes="scene-viewer quick-look"
-            ar-placement="floor"
-            ar-scale="auto"
-            camera-controls
-            exposure="1"
-            environment-image="assets/environment/poly_haven_studio_1k.hdr"
-            auto-rotate
-        ></model-viewer>
-    </div>
-
-    <input type="file" id="textureInput" style="display: none;">
-
-    <script type="module">
-        const modelViewer = document.querySelector('model-viewer');
-        const textureInput = document.getElementById('textureInput');
-
-        // Handle drag and drop events
-        document.addEventListener('dragover', (event) => event.preventDefault());
-        document.addEventListener('drop', handleDrop);
-
-        // Open file input on click
-        modelViewer.addEventListener('click', () => {
-            textureInput.click();
-        });
-
-        // Handle file input change
-        textureInput.addEventListener('change', handleFileInput);
-
-        // Function to handle drop events
-        function handleDrop(event) {
-            event.preventDefault();
-
-            if (event.dataTransfer.items) {
-                const file = event.dataTransfer.items[0].getAsFile();
-                handleTexture(file);
-            }
-        }
-
-        // Function to handle file input change
-        function handleFileInput(event) {
-            const file = event.target.files[0];
-            handleTexture(file);
-        }
-
-        // Function to handle texture loading
-        function handleTexture(file) {
-            const reader = new FileReader();
-            reader.onload = function (event) {
-                const textureURL = event.target.result;
-                modelViewer.setAttribute('src', `assets/models/canton_Bottle.glb`);
-                modelViewer.setAttribute('ios-src', `assets/models/canton_Bottle.usdz`);
-                modelViewer.setAttribute('environment-image', 'assets/environment/poly_haven_studio_1k.hdr');
-                modelViewer.setAttribute('style', 'width: 100%; height: 100%;');
-                modelViewer.setAttribute('ar', '');
-                modelViewer.setAttribute('ar-modes', 'scene-viewer quick-look');
-                modelViewer.setAttribute('auto-rotate', '');
-                modelViewer.setAttribute('camera-controls', '');
-                modelViewer.setAttribute('exposure', '1');
-
-                const texture = new Image();
-                texture.src = textureURL;
-
-                texture.onload = function () {
-                    modelViewer.model.materials[0].pbrMetallicRoughness.baseColorTexture.texture.source.setImage(texture);
-                };
-            };
-
-            reader.readAsDataURL(file);
-        }
-    </script>
+<div style="display: flex; flex-direction: row;">
+    <model-viewer
+        src="assets/models/canton_Bottle.glb"
+        style="width: 400px; height: 600px; margin: 0 auto;"
+        auto-rotate
+        ios-src="assets/models/canton_Bottle.usdz"
+        ar
+        ar-modes="scene-viewer quick-look"
+		ar environment-image="assets/environment/poly_haven_studio_1k.hdr"
+    ></model-viewer>
+    <model-viewer
+        src="assets/models/soda_can.glb"
+        style="width: 400px; height: 600px; margin: 0 auto;"
+        auto-rotate
+        ios-src="assets/models/soda_can.usdz"
+        ar
+        ar-modes="scene-viewer quick-look"
+		ar environment-image="assets/environment/poly_haven_studio_1k.hdr"
+    ></model-viewer>
+</div>
 </body>
 </html>
