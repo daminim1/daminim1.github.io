@@ -4,41 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Model viewer Test</title>
-    <style>
-        body {
-            margin: 0; /* Remove default margin */
-        }
-
-        h1 {
-            text-align: center;
-            background-color: #ff7038;
-            color: #fff;
-            padding: 10px;
-            margin: 0; /* Remove default margin */
-        }
-
-        model-viewer {
-            width: 400px;
-            height: 600px;
-            margin: 0 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .gallery-container {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-around;
-            padding: 20px;
-        }
-    </style>
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
 </head>
 <body>
-    <h1>Bottle Gallery</h1>
-    <div class="gallery-container">
+    <h1 style="text-align: center; background-color: #ff7038; color: #fff; padding: 0px;">Bottle Gallery</h1>
+    <div style="display: flex; flex-direction: row; justify-content: space-around; padding: 20px;">
         <model-viewer
             src="assets/models/canton_Bottle.glb"
             alt="Canton Bottle 3D Model"
+            style="width: 400px; height: 600px;"
+            camera-controls touch-action="pan-y"
             ios-src="assets/models/canton_Bottle.usdz"
             ar
             ar-modes="scene-viewer quick-look"
@@ -47,6 +22,8 @@
         <model-viewer
             src="assets/models/soda_can.glb"
             alt="Soda Can 3D Model"
+            style="width: 400px; height: 600px;"
+            camera-controls touch-action="pan-y"
             ios-src="assets/models/soda_can.usdz"
             ar
             ar-modes="scene-viewer quick-look"
