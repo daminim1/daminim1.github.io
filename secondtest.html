@@ -41,6 +41,9 @@
     <h1>Bottle Gallery v2</h1>
     <button onclick="window.location.href='index.html'">Go to first Gallery</button>
     <div>
+        <button class="slide" onclick="switchSrc(0, 'canton_Bottle')" style="background-image: url('assets/images/canton_Bottle.webp');"></button>
+        <button class="slide" onclick="switchSrc(1, 'soda_can')" style="background-image: url('assets/images/soda_can.webp');"></button>
+        
         <model-viewer
             src="assets/models/canton_Bottle.glb"
             poster="assets/models/canton_Bottle.webp"
@@ -54,18 +57,21 @@
             <div id="ar-prompt"><img src="assets/hand.png"></div>
             <button id="ar-failure">AR is not tracking!</button>
         </model-viewer>
+
+        <!-- Add more model-viewer elements for other models -->
+
     </div>
 
     <script type="module">
-        const modelViewer = document.querySelector("model-viewer");
+        const modelViewers = document.querySelectorAll("model-viewer");
 
-        window.switchSrc = (element, name) => {
+        window.switchSrc = (viewerIndex, name) => {
             const base = `assets/models/${name}`;
-            modelViewer.src = `${base}.glb`;
-            modelViewer.poster = `${base}.webp`;
+            modelViewers[viewerIndex].src = `${base}.glb`;
+            modelViewers[viewerIndex].poster = `${base}.webp`;
             const slides = document.querySelectorAll(".slide");
             slides.forEach((element) => {element.classList.remove("selected");});
-            element.classList.add("selected");
+            slides[viewerIndex].classList.add("selected");
         };
 
         document.querySelector(".slider").addEventListener('beforexrselect', (ev) => {
