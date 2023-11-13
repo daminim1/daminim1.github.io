@@ -40,44 +40,46 @@
 <body>
     <h1>Bottle Gallery v2</h1>
     <button onclick="window.location.href='index.html'">Go to first Gallery</button>
-    <div>
-        <button class="slide" onclick="switchSrc(0, 'canton_Bottle')" style="background-image: url('assets/images/canton_Bottle.webp');"></button>
-        <button class="slide" onclick="switchSrc(1, 'soda_can')" style="background-image: url('assets/images/soda_can.webp');"></button>
-        
-        <model-viewer
-            src="assets/models/canton_Bottle.glb"
-            poster="assets/models/canton_Bottle.webp"
-            shadow-intensity="1"
-            ar
-            camera-controls
-            touch-action="pan-y"
-            alt="A 3D model of a bottle"
-        >
-            <button slot="ar-button" id="ar-button">View in your space</button>
-            <div id="ar-prompt"><img src="assets/hand.png"></div>
-            <button id="ar-failure">AR is not tracking!</button>
-        </model-viewer>
+   <model-viewer src="assets/models/canton_Bottle.glb" poster="assets/images/canton_Bottle.webp" shadow-intensity="1" ar camera-controls touch-action="pan-y" alt="A 3D model carousel">
+  
+  <button slot="ar-button" id="ar-button">
+    View in your space
+  </button>
 
-        <!-- Add more model-viewer elements for other models -->
+  <div id="ar-prompt">
+    <img src="../../assets/hand.png">
+  </div>
 
-    </div>
+  <button id="ar-failure">
+    AR is not tracking!
+  </button>
 
-    <script type="module">
-        const modelViewers = document.querySelectorAll("model-viewer");
+  <div class="slider">
+    <div class="slides">
+      <button class="slide selected" onclick="switchSrc(this, 'canton_Bottle')" style="background-image: url('assets/images/canton_Bottle.webp');">
 
-        window.switchSrc = (viewerIndex, name) => {
-            const base = `assets/models/${name}`;
-            modelViewers[viewerIndex].src = `${base}.glb`;
-            modelViewers[viewerIndex].poster = `${base}.webp`;
-            const slides = document.querySelectorAll(".slide");
-            slides.forEach((element) => {element.classList.remove("selected");});
-            slides[viewerIndex].classList.add("selected");
-        };
+      </button><button class="slide" onclick="switchSrc(this, 'soda_can')" style="background-image: url('assets/images/soda_can.webp');">
+   
+    </button></div>
+  </div>
+</model-viewer>
 
-        document.querySelector(".slider").addEventListener('beforexrselect', (ev) => {
-            // Keep slider interactions from affecting the XR scene.
-            ev.preventDefault();
-        });
+<script type="module">
+  const modelViewer = document.querySelector("model-viewer");
+
+  window.switchSrc = (element, name) => {
+    const base = "assets/models/" + name;
+    modelViewer.src = base + '.glb';
+    modelViewer.poster = base + '.webp';
+    const slides = document.querySelectorAll(".slide");
+    slides.forEach((element) => {element.classList.remove("selected");});
+    element.classList.add("selected");
+  };
+
+  document.querySelector(".slider").addEventListener('beforexrselect', (ev) => {
+    // Keep slider interactions from affecting the XR scene.
+    ev.preventDefault();
+  });
 </script>
 
 <style>
@@ -206,8 +208,5 @@
   }
 
 </style>
-          
-        ></model-viewer>
-    </div>
 </body>
 </html>
