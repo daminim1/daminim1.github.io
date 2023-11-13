@@ -3,87 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Model viewer Test</title>
-	<style>
-	    h1 {
-		    text-align: center;
-			background-color: #ff7038;
-			color: #fff;
-			padding: 0px;
-		}
-	
-	    div {
-		    display: flex;
-			flex-direction: row;
-			justify-content: space-around;
-			padding: 20px;
-		}
-		
-	    model-viewer {
-		    width: 400px;
-			height: 600px;
-			margin: 0 10px;
-			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-		}
-	    
-		button {
-		    padding: 10px 20px;
-			font-size: 16px;
-			background-color: #3498db;
-			color: #fff;
-			border: none;
-			cursor: pointer;
-		}
-		
-	</style>
+    <title>Bottle Gallery v2</title>
+    <style>
+        h1 {
+            text-align: center;
+            background-color: #ff7038;
+            color: #fff;
+            padding: 10px; /* Adjusted padding for better appearance */
+        }
+
+        div {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        model-viewer {
+            width: 400px;
+            height: 600px;
+            margin: 0 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
 </head>
 <body>
     <h1>Bottle Gallery v2</h1>
-	<button onclick="window.location.href='index.html'">Go to first Gallery</button>
+    <button onclick="window.location.href='index.html'">Go to first Gallery</button>
     <div>
-        <model-viewer 
-		src="assets/models/canton_Bottle.glb" poster="../../assets/ShopifyModels/Chair.webp" shadow-intensity="1" ar camera-controls touch-action="pan-y" alt="A 3D model carousel">
-  
-  <button slot="ar-button" id="ar-button">
-    View in your space
-  </button>
+        <model-viewer
+            src="assets/models/canton_Bottle.glb"
+            poster="assets/models/canton_Bottle.webp"
+            shadow-intensity="1"
+            ar
+            camera-controls
+            touch-action="pan-y"
+            alt="A 3D model of a bottle"
+        >
+            <button slot="ar-button" id="ar-button">View in your space</button>
+            <div id="ar-prompt"><img src="assets/hand.png"></div>
+            <button id="ar-failure">AR is not tracking!</button>
+        </model-viewer>
+    </div>
 
-  <div id="ar-prompt">
-    <img src="../../assets/hand.png">
-  </div>
+    <script type="module">
+        const modelViewer = document.querySelector("model-viewer");
 
-  <button id="ar-failure">
-    AR is not tracking!
-  </button>
+        window.switchSrc = (element, name) => {
+            const base = `assets/models/${name}`;
+            modelViewer.src = `${base}.glb`;
+            modelViewer.poster = `${base}.webp`;
+            const slides = document.querySelectorAll(".slide");
+            slides.forEach((element) => {element.classList.remove("selected");});
+            element.classList.add("selected");
+        };
 
-  <div class="slider">
-    <div class="slides">
-      <button class="slide selected" onclick="switchSrc(this, 'Chair')" style="background-image: url('../../assets/ShopifyModels/Chair.webp');">
-
-      </button><button class="slide" onclick="switchSrc(this, 'Mixer')" style="background-image: url('../../assets/ShopifyModels/Mixer.webp');">
-
-          
-    </button></div>
-  </div>
-</model-viewer>
-
-<script type="module">
-  const modelViewer = document.querySelector("model-viewer");
-
-  window.switchSrc = (element, name) => {
-    const base = "../../assets/ShopifyModels/" + name;
-    modelViewer.src = base + '.glb';
-    modelViewer.poster = base + '.webp';
-    const slides = document.querySelectorAll(".slide");
-    slides.forEach((element) => {element.classList.remove("selected");});
-    element.classList.add("selected");
-  };
-
-  document.querySelector(".slider").addEventListener('beforexrselect', (ev) => {
-    // Keep slider interactions from affecting the XR scene.
-    ev.preventDefault();
-  });
+        document.querySelector(".slider").addEventListener('beforexrselect', (ev) => {
+            // Keep slider interactions from affecting the XR scene.
+            ev.preventDefault();
+        });
 </script>
 
 <style>
