@@ -64,6 +64,7 @@
             </div>
         </model-viewer>
         <model-viewer
+		    id="soda_can"
             src="assets/models/soda_can.glb"
             alt="Soda Can 3D Model"
             camera-controls touch-action="pan-y"
@@ -71,6 +72,9 @@
             ar
             ar-modes="scene-viewer quick-look"
             ar environment-image="assets/environment/poly_haven_studio_1k.hdr">
+			 <div class="controls">
+                <div>Variant: <select id="variant_soda_can"></select></div>
+            </div>
         </model-viewer>
         <script>
             const modelViewerBottle = document.querySelector("model-viewer#canton_bottle");
@@ -95,6 +99,31 @@
                 modelViewerBottle.variantName = event.target.value === 'default' ? null : event.target.value;
             });
         </script>
+		<script>
+        const modelViewerSodaCan = document.querySelector("model-viewer#soda_can");
+        const selectSodaCan = document.querySelector('#variant_soda_can');
+
+        modelViewerSodaCan.addEventListener('load', () => {
+            const names = modelViewerSodaCan.availableVariants;
+            for (const name of names) {
+                const option = document.createElement('option');
+                option.value = name;
+                option.textContent = name;
+                selectSodaCan.appendChild(option);
+            }
+
+            // Adds a default option.
+            const option = document.createElement('option');
+            option.value = 'default';
+            option.textContent = 'Default';
+            selectSodaCan.appendChild(option);
+        });
+
+        selectSodaCan.addEventListener('input', (event) => {
+            modelViewerSodaCan.variantName = event.target.value === 'default' ? null : event.target.value;
+        });
+    </script>
+		    
     </div>
 </body>
 </html>
