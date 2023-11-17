@@ -24,7 +24,7 @@
         div {
             display: flex;
             flex-direction: row;
-            justify-content: flex-start;
+            justify-content: space-around;
             padding: 20px;
         }
 
@@ -34,10 +34,6 @@
             margin: 0 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-	    select {
-		    width: 100%; 
-		    padding: 8px; 
-		    box-sizing: border-box; 
 
         button {
             padding: 10px 20px;
@@ -48,12 +44,16 @@
             cursor: pointer;
         }
 		
+		select {
+            width: 150px; 
+        }
+		
     </style>
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
 </head>
 <body>
     <h1>Bottle Gallery</h1>
-    <button onclick="window.location.href='index.html'">Go to first Gallery</button>
+    <button onclick="window.location.href='secondtest.html'">Go to second test</button>
     <div id="modelViewersContainer"></div>
 
     <script>
@@ -78,17 +78,19 @@
 
             viewer.addEventListener('load', () => {
                 const names = viewer.availableVariants;
-                for (const name of names) {
-                    const option = document.createElement('option');
-                    option.value = name;
-                    option.textContent = name;
-                    select.appendChild(option);
-                }
+                if (names) {
+                    for (const name of names) {
+                        const option = document.createElement('option');
+                        option.value = name;
+                        option.textContent = name;
+                        select.appendChild(option);
+                    }
 
-                const defaultOption = document.createElement('option');
-                defaultOption.value = 'default';
-                defaultOption.textContent = 'Default';
-                select.appendChild(defaultOption);
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = 'default';
+                    defaultOption.textContent = 'Default';
+                    select.appendChild(defaultOption);
+                }
             });
 
             select.addEventListener('input', (event) => {
