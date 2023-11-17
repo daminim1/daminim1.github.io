@@ -47,12 +47,17 @@
 </head>
 <body>
     <h1>Bottle Gallery</h1>
-    <button onclick="window.location.href='index.html'">Go to first Gallery</button>
+    <button onclick="window.location.href='secondtest.html'">Go to second test</button>
     <div>
         <script>
-            function setupModelViewer(id, src, iosSrc, environmentImage, variantId) {
-                const modelViewer = document.querySelector(`model-viewer#${id}`);
-                const select = document.querySelector(`#${variantId}`);
+            function setupModelViewer(id, src, arModes, environmentImage, variantId) {
+                const modelViewer = document.getElementById(id);
+                const select = document.getElementById(variantId);
+
+                if (!modelViewer || !select) {
+                    console.error("Model Viewer or Select element not found.");
+                    return;
+                }
 
                 modelViewer.addEventListener('load', () => {
                     const names = modelViewer.availableVariants;
