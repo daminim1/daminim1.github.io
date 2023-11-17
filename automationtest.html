@@ -47,47 +47,46 @@
 </head>
 <body>
     <h1>Bottle Gallery</h1>
-    <button onclick="addModelViewer()">Add Model Viewer</button>
-    <div id="modelViewerContainer"></div>
+    <button onclick="window.location.href='secondtest.html'">Go to second test</button>
+    <div>
+        <script>
+            function setupModelViewer(id, src, arModes, environmentImage, variantId) {
+                const modelViewer = document.getElementById(id);
+                const select = document.getElementById(variantId);
 
-    <script>
-        function setupModelViewer(id, src, arModes, environmentImage, variantId) {
-            const modelViewer = document.querySelector(`model-viewer#${id}`);
-            const select = document.querySelector(`#${variantId}`);
-
-            modelViewer.addEventListener('load', () => {
-                const names = modelViewer.availableVariants;
-                for (const name of names) {
-                    const option = document.createElement('option');
-                    option.value = name;
-                    option.textContent = name;
-                    select.appendChild(option);
+                if (!modelViewer || !select) {
+                    console.error("Model Viewer or Select element not found.");
+                    return;
                 }
 
-                // Adds a default option.
-                const option = document.createElement('option');
-                option.value = 'default';
-                option.textContent = 'Default';
-                select.appendChild(option);
-            });
+                modelViewer.addEventListener('load', () => {
+                    const names = modelViewer.availableVariants;
+                    for (const name of names) {
+                        const option = document.createElement('option');
+                        option.value = name;
+                        option.textContent = name;
+                        select.appendChild(option);
+                    }
 
-            select.addEventListener('input', (event) => {
-                modelViewer.variantName = event.target.value === 'default' ? null : event.target.value;
-            });
+                    // Adds a default option.
+                    const option = document.createElement('option');
+                    option.value = 'default';
+                    option.textContent = 'Default';
+                    select.appendChild(option);
+                });
 
-            modelViewer.src = src;
-            modelViewer.arModes = arModes;
-            modelViewer.environmentImage = environmentImage;
-        }
+                select.addEventListener('input', (event) => {
+                    modelViewer.variantName = event.target.value === 'default' ? null : event.target.value;
+                });
 
-        function addModelViewer() {
-            const container = document.getElementById('modelViewerContainer');
-            const newModelViewer = document.createElement('model-viewer');
-            newModelViewer.id = 'new_model_viewer'; // Assign a unique ID
-            container.appendChild(newModelViewer);
+                modelViewer.src = src;
+                modelViewer.arModes = arModes;
+                modelViewer.environmentImage = environmentImage;
+            }
 
-            setupModelViewer('new_model_viewer', 'path/to/your/model.glb', 'webxr scene-viewer quick-look', 'path/to/your/environment.hdr', 'new_variant');
-        }
-    </script>
+            // Usage
+            setupModelViewer('canton_bottle', 'assets/models/canton_Bottle.glb', 'webxr scene-viewer quick-look', 'assets/environment/poly_haven_studio_1k.hdr', 'variant');
+        </script>
+    </div>
 </body>
 </html>
