@@ -3,37 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Model Viewer Test</title>
+    <title>Dynamic Model Viewers</title>
     <style>
+	
         body {
-            background: linear-gradient(to bottom, #3498db, #2c3e50);
-            margin: 0;
-            font-family: 'Arial', sans-serif;
-            overflow-x: hidden;
-        }
-        
+		    background: linear-gradient(to bottom, #3498db, #2c3e50);
+			margin: 0;
+			font-family: 'Arial', sans-serif;
+			overflow-x: hidden;
+		}
+		
         h1 {
             text-align: center;
             background-color: #ff7038;
             color: #fff;
             padding: 10px;
-            margin: 0;
+			margin: 0;
         }
-    
+
         div {
             display: flex;
             flex-direction: row;
             justify-content: space-around;
             padding: 20px;
         }
-        
+
         model-viewer {
             width: 400px;
             height: 600px;
             margin: 0 10px;
-            background-color: unset;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
-        
+
         button {
             padding: 10px 20px;
             font-size: 16px;
@@ -42,51 +43,59 @@
             border: none;
             cursor: pointer;
         }
+		
     </style>
     <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.3.0/model-viewer.min.js"></script>
 </head>
 <body>
     <h1>Bottle Gallery</h1>
-    <button onclick="window.location.href='secondtest.html'">Go to second test</button>
-    <div>
-        <script>
-            function setupModelViewer(id, src, arModes, environmentImage, variantId) {
-                const modelViewer = document.getElementById(id);
-                const select = document.getElementById(variantId);
+    <button onclick="window.location.href='index.html'">Go to first Gallery</button>
+    <div id="modelViewersContainer"></div>
 
-                if (!modelViewer || !select) {
-                    console.error("Model Viewer or Select element not found.");
-                    return;
+    <script>
+        const modelNames = ['canton_bottle', 'soda_can', 'mayo_bottle', 'new_model'];
+
+        function createModelViewer(modelName) {
+            const container = document.getElementById('modelViewersContainer');
+            const viewer = document.createElement('model-viewer');
+            const select = document.createElement('select');
+
+            viewer.id = `${modelName}_viewer`;
+            viewer.src = `assets/models/${modelName}.glb`;
+            viewer.iosSrc = `assets/models/${modelName}.usdz`;
+            viewer.alt = `${modelName} 3D Model`;
+            viewer.cameraControls = true;
+            viewer.touchAction = 'pan-y';
+            viewer.ar = true;
+            viewer.arModes = 'webxr scene-viewer quick-look';
+            viewer.environmentImage = 'assets/environment/poly_haven_studio_1k.hdr';
+
+            select.id = `variant_${modelName}`;
+
+            viewer.addEventListener('load', () => {
+                const names = viewer.availableVariants;
+                for (const name of names) {
+                    const option = document.createElement('option');
+                    option.value = name;
+                    option.textContent = name;
+                    select.appendChild(option);
                 }
 
-                modelViewer.addEventListener('load', () => {
-                    const names = modelViewer.availableVariants;
-                    for (const name of names) {
-                        const option = document.createElement('option');
-                        option.value = name;
-                        option.textContent = name;
-                        select.appendChild(option);
-                    }
+                const defaultOption = document.createElement('option');
+                defaultOption.value = 'default';
+                defaultOption.textContent = 'Default';
+                select.appendChild(defaultOption);
+            });
 
-                    // Adds a default option.
-                    const option = document.createElement('option');
-                    option.value = 'default';
-                    option.textContent = 'Default';
-                    select.appendChild(option);
-                });
+            select.addEventListener('input', (event) => {
+                viewer.variantName = event.target.value === 'default' ? null : event.target.value;
+            });
 
-                select.addEventListener('input', (event) => {
-                    modelViewer.variantName = event.target.value === 'default' ? null : event.target.value;
-                });
+            container.appendChild(viewer);
+            container.appendChild(select);
+        }
 
-                modelViewer.src = src;
-                modelViewer.arModes = arModes;
-                modelViewer.environmentImage = environmentImage;
-            }
-
-            // Usage
-            setupModelViewer('canton_bottle', 'assets/models/canton_Bottle.glb', 'webxr scene-viewer quick-look', 'assets/environment/poly_haven_studio_1k.hdr', 'variant');
-        </script>
-    </div>
+        modelNames.forEach(createModelViewer);
+    </script>
 </body>
 </html>
